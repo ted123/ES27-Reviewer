@@ -30,9 +30,24 @@
      		<button id="reviewer_hard" type="button" class="btn btn-danger btn-block"> HARD </button><br/>
      		
      	</center>
+     </div>
       <div class="modal-footer">
       </div>
     </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="reviewer_alertModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div id="alert-content">
+      </div>
+      <div class="modal-footer">
+      	<button class="btn btn-success" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
@@ -144,10 +159,10 @@ function shuffle(array) {
 
 function congratulate(){
 	if(score<15){
-		alert('FAIL! Your total score is: '+ score+"/30");
+		alertModal('FAIL! Your total score is: '+ score+"/30");
 		reset();
 	}else{
-		alert('PASS! Your total score is: '+ score+"/30");
+		alertModal('PASS! Your total score is: '+ score+"/30");
 		reset();
 	}
 }
@@ -156,14 +171,14 @@ function check(guess){
 	var str2=guess.toLowerCase().replace(/ /g, '');
 
 	if(str1==str2){
-		alert('Correct!');
+		alertModal('Correct!');
 		score++;
 		$('#numscore').html('Score: '+score+'/30');
 		question();
 
 
 	}else{
-		alert('Correct answer: '+$('#answer').val()+'  Your answer:'+guess);
+		alertModal('Correct answer: '+$('#answer').val()+'  Your answer:'+guess);
 		question();
 	}
 
@@ -194,7 +209,7 @@ function reviewerTimer(clock){
 		COUNTDOWN--;
     	$(clock).val(COUNTDOWN).trigger('change');
     	if(COUNTDOWN<=0){
-    		alert("Time's Up! Correct answer: "+$('#answer').val());
+    		alertModal("Time's Up! Correct answer: "+$('#answer').val());
     		question();
     	}
     }, 1000);
@@ -206,6 +221,10 @@ function createClock(){
 	reviewerTimer('.dial'+numitem);
 }
 
+function alertModal(notice){
+	$('#alert-content').html("<center>"+notice+"</center>");
+	$('#reviewer_alertModal').modal('show');
+}
 $( document ).ready(function() {
     $('#reviewer_menu').modal('show');
     
